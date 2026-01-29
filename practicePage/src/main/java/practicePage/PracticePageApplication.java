@@ -1,0 +1,13 @@
+package practicePage;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class PracticePageApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(PracticePageApplication.class, args);
+	}
+
+}
