@@ -112,6 +112,24 @@ public class BoardController {
 
 		return "board/boardList";
 	}
+	
+	@GetMapping("/delete")
+	public String boardDelete(Board board, Model model) {
+		log.info("boardDetail board = " + board.toString());
+
+		try {
+			int count = boardService.remove(board);
+			if (count > 0) {
+				model.addAttribute("message", "%d 님의 게시판이 삭제되었습니다.".formatted(board.getNo()));
+				return "board/success";
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("message", "%d 님의 게시판삭제를 실패하였습니다..".formatted(board.getNo()));
+		return "board/failed";
+	}
 
 	
 

@@ -45,9 +45,16 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
 	public int remove(Board board) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = 1;
+		try {
+			boardRepository.deleteById(board.getNo());
+		} catch (Exception e) {
+			log.info(e.toString());
+			count = 0;
+		}
+		return count;
 	}
 
 	@Override
