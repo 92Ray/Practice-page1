@@ -131,6 +131,20 @@ public class BoardController {
 		return "board/failed";
 	}
 
-	
+	@GetMapping("/search")
+	public String boardSearch(Model model, String searchType, String keyword) {
+		log.info("searchType = " + searchType + "keyword = " + keyword);
+
+		try {
+			List<Board> boardList = boardService.search(searchType, keyword);
+
+			model.addAttribute("boardList", boardList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "board/boardList";
+	}
 
 }
