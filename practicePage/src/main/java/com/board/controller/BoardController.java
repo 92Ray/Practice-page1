@@ -96,6 +96,22 @@ public class BoardController {
 
 		return "board/detail";
 	}
+	
+	@GetMapping("/boardlist")
+	public String boardList(Model model) {
+		log.info("boardlist");
+
+		try {
+			List<Board> boardList = boardService.list();
+
+			model.addAttribute("boardList", boardList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "board/boardList";
+	}
 
 	
 
