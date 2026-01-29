@@ -77,6 +77,25 @@ public class BoardController {
 		model.addAttribute("message", "%s 님의 게시판 수정 실패.".formatted(b.getWriter()));
 		return "board/failed";
 	}
+	
+	@GetMapping("/detail")
+	public String boardDetail(Board b, Model model) {
+		log.info("boardDetail board = " + b.toString());
+
+		try {
+			Board board = boardService.read(b);
+			if (board == null) {
+				model.addAttribute("message", "%d 님의 상세정보가 없습니다.".formatted(board.getNo()));
+				return "board/failed";
+			}
+			model.addAttribute("board", board);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "board/detail";
+	}
 
 	
 
