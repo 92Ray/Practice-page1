@@ -1,5 +1,7 @@
 package com.board.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,5 +42,42 @@ public class BoardController {
 		model.addAttribute("message", "%s 님의 게시판이 등록실패하였습니다.".formatted(board.getWriter()));
 		return "board/failed";
 	}
+	
+	@GetMapping("/updateForm")
+	public String boardUpdateForm(Board b, Model model) {
+		log.info("boardUpdateForm board = " + b.toString());
+
+		try {
+			Board board = boardService.read(b);
+			if (board == null) {
+				model.addAttribute("message", "%d 님의 정보가 없습니다..".formatted(board.getNo()));
+				return "board/failed";
+			}
+			model.addAttribute("board", board);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "board/updateForm";
+	}
+
+	@PostMapping("/update")
+	public String boardUpdate(Board b, Model model) {
+		log.info("boardUpdate board = " + b.toString());
+
+		try {
+			int count = boardService.modify(b);
+			if (count > 0) {
+				model.addAttribute("message", "%s 님의 게시판 수정 성공.".formatted(b.getWriter()));
+				return "board/success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		model.addAttribute("message", "%s 님의 게시판 수정 실패.".formatted(b.getWriter()));
+		return "board/failed";
+	}
+
+	
 
 }

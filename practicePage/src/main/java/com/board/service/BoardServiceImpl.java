@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.board.domain.Board;
 import com.board.repository.BoardRepository;
@@ -26,9 +27,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Board read(Board board) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional(readOnly = true) //트랜잭션 처리 하지 말고 읽기만 하라는 뜻
+	public Board read(Board b) throws Exception {
+		return boardRepository.getReferenceById(b.getNo());
 	}
 
 	@Override
